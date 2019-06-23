@@ -22,6 +22,7 @@
 #include "EventLoop.h"
 #include "Datachannels.h"
 #include "Endpoint.h"
+#include "PCAPFile.h"
 
 class RTPTransport :
 	public EventLoop::Listener,
@@ -62,8 +63,8 @@ public:
 	void Reset();
 	int End();
 	
-	int SendRTPPacket(Buffer&& packet);
-	int SendRTCPPacket(Buffer&& packet);
+	int SendRTPPacket(Packet&& packet);
+	int SendRTCPPacket(Packet&& packet);
 
 	int SetLocalCryptoSDES(const char* suite, const char* key64);
 	int SetRemoteCryptoSDES(const char* suite, const char* key64);
@@ -122,6 +123,8 @@ private:
 	in_addr_t recIP;
 	DWORD	  recPort;
 	DWORD     prio;
+	bool	  dumping;
+	PCAPFile  pcap;
 };
 
 #endif
